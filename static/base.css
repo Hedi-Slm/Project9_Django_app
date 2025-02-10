@@ -1,0 +1,16 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.wrapper {
+    width: 75%;
+    margin: 0 auto;
+    border: 2px solid black;
+}
+
+header {
+    border-bottom: 2px solid black;
+    font-size: 24px;
+    font-weight: bold;
+}
