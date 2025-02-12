@@ -1,0 +1,17 @@
+from django.db import models
+from django.db.models import UniqueConstraint, CheckConstraint
+from django.conf import settings
+
+
+class UserFollows(models.Model):
+    follower = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='following',on_delete=models.CASCADE)
+    followed = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_followers', on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(fields=['follower', 'followed'], name='unique_follow'),
+            CheckConstraint(
+                check=~models.Q(follower=models.F('followed')),
+                name='prevent_self_follow'
+            )
+        ]
