@@ -11,6 +11,35 @@ body {
 
 header {
     border-bottom: 2px solid black;
+}
+
+.wrapper #base_header {
     font-size: 24px;
     font-weight: bold;
 }
+
+/* Header with navigation */
+.header-with-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.header-with-nav .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header-with-nav nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2rem;
+}
+
+.header-with-nav nav a {
+    text-decoration: none;
+    color: black;
+}
+

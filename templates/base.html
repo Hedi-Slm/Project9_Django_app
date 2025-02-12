@@ -10,7 +10,9 @@
 </head>
 <body>
     <div class="wrapper">
-        <header>LITReview</header>
+        {% block header %}
+        <header id="base_header">LITReview</header>
+        {% endblock %}
         <div class="container">
             {% block content %}{% endblock %}
         </div>
