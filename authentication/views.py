@@ -28,7 +28,7 @@ def login_view(request):
             )
             if user is not None:
                 login(request, user)
-                return redirect('home')  # Redirect to a home page (you need to define it)
+                return redirect('reviews:feed')
 
     else:
         form = AuthenticationForm()
