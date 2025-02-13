@@ -1,0 +1,29 @@
+{% extends 'base_plus_navbar.html' %}
+
+{% block title %}Feed - LITReview{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2>Your Feed</h2>
+    </div>
+    <div class="col text-end">
+        <a href="{% url 'reviews:ticket_create' %}" class="btn btn-primary me-2">Create Ticket</a>
+        <a href="{% url 'reviews:create_ticket_review' %}" class="btn btn-success">Create Review</a>
+    </div>
+</div>
+
+{% for post in posts %}
+    <div class="card mb-4">
+        <div class="card-body">
+            {% if post.content_type == 'TICKET' %}
+                {% include 'reviews/ticket_snippet.html' with ticket=post %}
+            {% elif post.content_type == 'REVIEW' %}
+                {% include 'reviews/review_snippet.html' with review=post %}
+            {% endif %}
+        </div>
+    </div>
+{% empty %}
+    <div class="alert alert-info">No posts in your feed yet.</div>
+{% endfor %}
+{% endblock %}
