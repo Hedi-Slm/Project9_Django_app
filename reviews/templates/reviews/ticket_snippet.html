@@ -1,0 +1,21 @@
+<div class="ticket">
+    <div class="d-flex justify-content-between align-items-start">
+        <h5 class="card-title">{{ ticket.title }}</h5>
+        <small class="text-muted">Posted by {{ ticket.user.username }} on {{ ticket.time_created|date:"M d, Y" }}</small>
+    </div>
+
+    <p class="card-text">{{ ticket.description }}</p>
+
+    {% if ticket.image %}
+        <img src="{{ ticket.image.url }}" alt="Ticket image" class="img-fluid mb-3">
+    {% endif %}
+
+    {% if ticket.user == user %}
+        <div class="btn-group">
+            <a href="{% url 'reviews:ticket_update' ticket.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+            <a href="{% url 'reviews:ticket_delete' ticket.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+        </div>
+    {% else %}
+        <a href="{% url 'reviews:review_create' ticket.id %}" class="btn btn-sm btn-primary">Write Review</a>
+    {% endif %}
+</div>

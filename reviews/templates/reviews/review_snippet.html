@@ -1,0 +1,33 @@
+<div class="review">
+    <div class="d-flex justify-content-between align-items-start">
+        <h5 class="card-title">{{ review.headline }}</h5>
+        <small>Review by {{ review.user.username }} on {{ review.time_created|date:"M d, Y" }}</small>
+    </div>
+
+    <div class="mb-2">
+        Rating:
+        {% for i in "12345" %}
+            {% if forloop.counter <= review.rating %}
+                ★
+            {% else %}
+                ☆
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <p class="card-text">{{ review.body }}</p>
+
+    <div class="card mb-3 bg-light">
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2">In response to:</h6>
+            {% include 'reviews/ticket_snippet.html' with ticket=review.ticket %}
+        </div>
+    </div>
+
+    {% if review.user == user %}
+        <div class="btn-group">
+            <a href="{% url 'reviews:review_update' review.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+            <a href="{% url 'reviews:review_delete' review.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+        </div>
+    {% endif %}
+</div>
