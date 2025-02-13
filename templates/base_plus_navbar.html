@@ -5,10 +5,10 @@
     <div class="logo">LITReview</div>
     <nav>
         <ul>
-            <li><a href="reviews:feed">Flux</a></li>
+            <li><a href="{% url 'reviews:feed' %}">Flux</a></li>
             <li><a href="#">Posts</a></li>
             <li><a href="#">Abonnements</a></li>
-            <li><a href="#">Se déconnecter</a></li>
+            <li><a href="{% url 'authentication:logout' %}">Se déconnecter</a></li>
         </ul>
     </nav>
 </header>
