@@ -11,6 +11,6 @@ class TicketAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('ticket', 'user', 'rating', 'time_created')
+    list_display = ('ticket__title', 'user', 'rating', 'time_created')
     search_fields = ('ticket__title', 'user__username')
     list_filter = ('rating', 'time_created')
