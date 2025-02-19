@@ -1,0 +1,59 @@
+{% extends 'base_plus_navbar.html' %}
+
+{% block title %}Abonnements - LITReview{% endblock title %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static '/social/subscription.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<div class="subscription-container">
+    <h2>Suivre d'autres utilisateurs</h2>
+
+    <form method="POST" action="{% url 'social:subscription_page' %}" class="follow-form">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur" required>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </div>
+    </form>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="subscriptions-lists">
+        <div class="following-section">
+            <h3>Abonnements</h3>
+            <div class="subscription-list">
+                {% for follow in following %}
+                <div class="subscription-item">
+                    <span>{{ follow.followed_user.username }}</span>
+                    <form method="POST" action="{% url 'social:unfollow_user' follow.followed_user.id %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Désabonner</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="followers-section">
+            <h3>Abonnés</h3>
+            <div class="subscription-list">
+                {% for follower in followers %}
+                <div class="subscription-item">
+                    <span>{{ follower.user.username }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
