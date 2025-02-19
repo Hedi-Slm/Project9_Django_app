@@ -11,15 +11,15 @@
           crossorigin="anonymous">
 
 
-    {% block extra_css %}{% endblock %}
+    {% block extra_css %}{% endblock extra_css %}
 </head>
 <body>
     <div class="wrapper">
         {% block header %}
         <header id="base_header">LITReview</header>
-        {% endblock %}
+        {% endblock header %}
         <div class="container">
-            {% block content %}{% endblock %}
+            {% block content %}{% endblock content %}
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
