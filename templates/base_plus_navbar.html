@@ -7,9 +7,9 @@
         <ul>
             <li><a href="{% url 'reviews:feed' %}">Flux</a></li>
             <li><a href="#">Posts</a></li>
-            <li><a href="#">Abonnements</a></li>
+            <li><a href="{% url 'social:subscription_page' %}">Abonnements</a></li>
             <li><a href="{% url 'authentication:logout' %}">Se déconnecter</a></li>
         </ul>
     </nav>
 </header>
-{% endblock %}
+{% endblock header %}
