@@ -3,7 +3,7 @@
 {% block extra_css %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'authentication/register.css' %}">
-{% endblock %}
+{% endblock extra_css %}
 
 {% block title %}LITReview - Inscription{% endblock %}
 
@@ -12,11 +12,18 @@
     <h2 class="title">Inscrivez-vous</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% for field in form %}
+            {{ field }}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
         <div>
             <a href="{% url 'authentication:login' %}" class="button">Retourner</a>
             <button type="submit" class="button">S'inscrire</button>
         </div>
     </form>
 </div>
-{% endblock %}
+{% endblock content %}
