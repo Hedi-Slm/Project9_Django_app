@@ -1,33 +1,32 @@
-<div class="review">
-    <div class="d-flex justify-content-between align-items-start">
-        <h5 class="card-title">{{ review.headline }}</h5>
-        <small>Review by {{ review.user.username }} on {{ review.time_created|date:"M d, Y" }}</small>
-    </div>
+{% load static %}
 
-    <div class="mb-2">
-        Rating:
-        {% for i in "12345" %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reviews/review_snippet.css' %}">
+{% endblock extra_css %}
+
+<div class="review-container">
+    <div class="review-header">
+        {% if review.user.username == user.username %}
+        <span class="review-requester">Vous avez publié une critique</span>
+        {% else %}
+        <span class="review-meta">{{ review.user.username }} a publié une critique </span>
+        {% endif %}
+        <span class="review-date"> {{ review.time_created|date:"H:i, d M Y" }} </span>
+    </div>
+    <h3 class="review-title">{{ review.headline }}</h3>
+    <div class="review-rating">
+        {% for i in "12345"|make_list %}
             {% if forloop.counter <= review.rating %}
-                ★
+                <span class="star-filled">★</span>
             {% else %}
-                ☆
+                <span class="star-empty">☆</span>
             {% endif %}
         {% endfor %}
     </div>
 
-    <p class="card-text">{{ review.body }}</p>
+    <p class="review-body">{{ review.body }}</p>
 
-    <div class="card mb-3 bg-light">
-        <div class="card-body">
-            <h6 class="card-subtitle mb-2">In response to:</h6>
-            {% include 'reviews/ticket_snippet.html' with ticket=review.ticket %}
-        </div>
+    <div class="review-ticket">
+        {% include 'reviews/ticket_snippet.html' with ticket=review.ticket %}
     </div>
-
-    {% if review.user == user %}
-        <div class="btn-group">
-            <a href="{% url 'reviews:review_update' review.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
-            <a href="{% url 'reviews:review_delete' review.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
-        </div>
-    {% endif %}
 </div>
