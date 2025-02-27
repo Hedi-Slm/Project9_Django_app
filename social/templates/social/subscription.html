@@ -2,6 +2,7 @@
 
 {% block title %}Abonnements - LITReview{% endblock title %}
 {% load static %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static '/social/subscription.css' %}">
 {% endblock extra_css %}
@@ -12,9 +13,9 @@
 
     <form method="POST" action="{% url 'social:subscription_page' %}" class="follow-form">
         {% csrf_token %}
-        <div class="input-group mb-3">
-            <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur" required>
-            <button type="submit" class="btn btn-primary">Envoyer</button>
+        <div class="search-container">
+            <input type="text" name="username" class="search-input" placeholder="Nom d'utilisateur" required>
+            <button type="submit" class="search-button">Envoyer</button>
         </div>
     </form>
 
@@ -28,31 +29,29 @@
     </div>
     {% endif %}
 
-    <div class="subscriptions-lists">
-        <div class="following-section">
-            <h3>Abonnements</h3>
-            <div class="subscription-list">
-                {% for follow in following %}
-                <div class="subscription-item">
-                    <span>{{ follow.followed_user.username }}</span>
-                    <form method="POST" action="{% url 'social:unfollow_user' follow.followed_user.id %}" class="d-inline">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-outline-danger btn-sm">Désabonner</button>
-                    </form>
-                </div>
-                {% endfor %}
+    <div class="subscriptions-section">
+        <h3>Abonnements</h3>
+        <div class="subscription-list">
+            {% for follow in following %}
+            <div class="subscription-item">
+                <div class="user-name">{{ follow.followed_user.username }}</div>
+                <form method="POST" action="{% url 'social:unfollow_user' follow.followed_user.id %}" class="unsubscribe-form">
+                    {% csrf_token %}
+                    <button type="submit" class="unsubscribe-button">Désabonner</button>
+                </form>
             </div>
+            {% endfor %}
         </div>
+    </div>
 
-        <div class="followers-section">
-            <h3>Abonnés</h3>
-            <div class="subscription-list">
-                {% for follower in followers %}
-                <div class="subscription-item">
-                    <span>{{ follower.user.username }}</span>
-                </div>
-                {% endfor %}
+    <div class="followers-section">
+        <h3>Abonnés</h3>
+        <div class="followers-list">
+            {% for follower in followers %}
+            <div class="follower-item">
+                <div class="user-name">{{ follower.user.username }}</div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </div>
