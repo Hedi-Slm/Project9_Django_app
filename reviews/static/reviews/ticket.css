@@ -1,0 +1,50 @@
+/* ticket.css */
+.ticket-card {
+    border: 2px solid black;
+    margin: 2rem;
+    padding: 1.5rem;
+    background: white;
+}
+
+.ticket-header {
+    margin-bottom: 1rem;
+}
+
+.ticket-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.ticket-requester {
+    font-weight: 500;
+    color: #333;
+}
+
+.ticket-date {
+    color: #666;
+}
+
+.ticket-title {
+    font-size: 1.25rem;
+    margin: 0;
+    color: #222;
+}
+
+.ticket-content {
+    margin-top: 1rem;
+}
+
+.ticket-description {
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.ticket-image {
+    max-width: 200px;
+    height: auto;
+    border-radius: 4px;
+}
