@@ -23,8 +23,14 @@ def feed(request):
 
     # Combine and sort
     posts = sorted(chain(reviews, tickets), key=lambda post: post.time_created, reverse=True)
-    return render(request, 'reviews/feed.html', {'posts': posts})
 
+    # Check which tickets already have reviews
+    # This adds a 'has_review' attribute to each ticket that can be checked in the template
+    for post in posts:
+        if post.content_type == 'TICKET':
+            post.has_review = Review.objects.filter(ticket=post).exists()
+
+    return render(request, 'reviews/feed.html', {'posts': posts})
 
 # Ticket Views
 @login_required
