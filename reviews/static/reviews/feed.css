@@ -1,0 +1,105 @@
+/* feed.css */
+.feed-container {
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.feed-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 200px;
+}
+
+.action-btn, .create-review-btn{
+    padding: 8px 16px;
+    border: 2px solid black;
+    background-color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    color: #000;
+    font-size: 1.5rem;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+.action-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.feed-card {
+    border: 2px solid black;
+    margin-bottom: 2rem;
+    background-color: #fff;
+}
+
+.empty-feed {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Review Styles */
+.review-container {
+    padding: 1.5rem;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.review-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.review-meta {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.review-rating {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.star-filled {
+    color: #000;
+}
+
+.star-empty {
+    color: #ccc;
+}
+
+.review-body {
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+
+/* "Create Review" button for tickets */
+.create-review-btn {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #fff;
+    border: 2px solid black;
+    text-decoration: none;
+    color: #000;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.create-review-btn:hover {
+    background-color: #f0f0f0;
+}
