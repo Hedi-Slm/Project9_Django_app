@@ -1,0 +1,54 @@
+/* Page container */
+.container-form {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+/* Page title */
+.page-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 0;
+}
+
+/* File upload button */
+.file-upload-btn {
+    padding: 8px 12px;
+    border: 2px solid black;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Submit button */
+.submit-btn {
+    padding: 10px 20px;
+    background-color: #fff;
+    border: 2px solid black;
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
