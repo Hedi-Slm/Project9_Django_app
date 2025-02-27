@@ -3,7 +3,7 @@
 {% block extra_css %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'authentication/login.css' %}">
-{% endblock %}
+{% endblock extra_css %}
 
 {% block title %}LITReview - Connexion{% endblock %}
 
@@ -19,10 +19,22 @@
             <h2 class="title">Connectez-vous</h2>
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {% for field in form %}
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
                 <button type="submit" class="button">Se connecter</button>
             </form>
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock content %}
