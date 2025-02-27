@@ -1,41 +1,59 @@
 {% extends 'base_plus_navbar.html' %}
+{% load static %}
 
 {% block title %}Create Review - LITReview{% endblock title %}
 
-{% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card mb-4">
-            <div class="card-header">
-                <h5 class="mb-0">Ticket being reviewed:</h5>
-            </div>
-            <div class="card-body">
-                {% include 'reviews/ticket_snippet.html' with ticket=ticket %}
-            </div>
-        </div>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reviews/review_create.css' %}">
+{% endblock extra_css %}
 
-        <div class="card">
-            <div class="card-header">
-                <h2 class="mb-0">Write Review</h2>
+{% block content %}
+<h1 id="page-title">Créer une critique</h1>
+<div class="review-container">
+    <div class="response-header">
+        <p>Vous êtes en train de poster en réponse à</p>
+    </div>
+    <div class="review-body">
+    <!-- Ticket -->
+    {% include 'reviews/ticket_snippet.html' with ticket=ticket %}
+    </div>
+
+    <!-- Review Form -->
+    <div class="review-card">
+        <h2>Critique</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Title -->
+            <div class="form-group">
+                <label for="id_headline">Titre</label>
+                <input type="text" name="headline" id="id_headline" class="form-control" required>
             </div>
-            <div class="card-body">
-                <form method="post">
-                    {% csrf_token %}
-                    {% for field in form %}
-                        <div class="mb-3">
-                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                            {{ field.errors }}
-                            {{ field }}
-                            {% if field.help_text %}
-                                <small class="form-text text-muted">{{ field.help_text }}</small>
-                            {% endif %}
-                        </div>
+
+            <div class="form-group">
+                <label>Note</label>
+                <div class="rating-grid">
+                    {% for i in "012345"|make_list %}
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="rating" value="{{ i }}" required>
+                            <span class="radio-number">{{ i }}</span>
+                        </label>
+                    </div>
                     {% endfor %}
-                    <button type="submit" class="btn btn-primary">Post Review</button>
-                    <a href="{% url 'reviews:feed' %}" class="btn btn-outline-secondary">Cancel</a>
-                </form>
+                </div>
             </div>
-        </div>
+
+            <div class="form-group">
+                <label for="id_body">Commentaire</label>
+                <textarea name="body" id="id_body" class="form-control" rows="5"></textarea>
+            </div>
+
+            <div class="form-buttons">
+                <a href="{% url 'reviews:feed' %}" class="cancel-btn">Annuler</a>
+                <button type="submit" class="submit-btn">Envoyer</button>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock content %}
