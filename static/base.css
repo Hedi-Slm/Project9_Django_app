@@ -1,6 +1,8 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 .wrapper {
@@ -11,23 +13,28 @@ body {
 
 header {
     border-bottom: 2px solid black;
-}
-
-.wrapper #base_header {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-/* Header with navigation */
-.header-with-nav {
+    height: 60px;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    position: relative;
     padding: 1rem;
 }
 
-.header-with-nav .logo {
-    font-size: 24px;
+#base_header {
+    justify-content: center; /* Center the logo */
+}
+
+.logo {
+    font-size: 20px;
     font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.header-with-nav nav {
+    position: absolute;
+    right: 1rem;
 }
 
 .header-with-nav nav ul {
@@ -42,4 +49,3 @@ header {
     text-decoration: none;
     color: black;
 }
-
