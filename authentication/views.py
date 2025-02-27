@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import RegisterForm
+from .forms import RegisterForm, CustomAuthenticationForm
 
 User = get_user_model()  # Ensure we use the custom User model
 
@@ -20,7 +20,7 @@ def register_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = CustomAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = authenticate(
                 username=form.cleaned_data['username'],
@@ -29,9 +29,8 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect('reviews:feed')
-
     else:
-        form = AuthenticationForm()
+        form = CustomAuthenticationForm()
 
     return render(request, 'authentication/login.html', {'form': form})
 
