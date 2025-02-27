@@ -10,21 +10,32 @@
 
 .left-content, .right-content {
     width: 45%;
+    text-align: center;
+}
+
+
+.right-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .form-field {
-    width: 300px;
+    width: 60%;
     margin: 10px auto;
     padding: 8px;
+    border: 2px solid black;
 }
 
 .button {
     margin: 10px;
     padding: 8px 20px;
-    border: 1px solid black;
+    border: 2px solid black;
     background-color: white;
     cursor: pointer;
     border-radius: 5px;
+    text-decoration: none;
+    color: black;
 }
 
 .title {
