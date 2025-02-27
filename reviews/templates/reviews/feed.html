@@ -1,29 +1,39 @@
 {% extends 'base_plus_navbar.html' %}
+{% load static %}
 
 {% block title %}Feed - LITReview{% endblock %}
 
-{% block content %}
-<div class="row mb-4">
-    <div class="col">
-        <h2>Your Feed</h2>
-    </div>
-    <div class="col text-end">
-        <a href="{% url 'reviews:ticket_create' %}" class="btn btn-primary me-2">Create Ticket</a>
-        <a href="{% url 'reviews:create_ticket_review' %}" class="btn btn-success">Create Review</a>
-    </div>
-</div>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reviews/feed.css' %}">
+{% endblock extra_css %}
 
-{% for post in posts %}
-    <div class="card mb-4">
-        <div class="card-body">
+{% block content %}
+<div class="feed-container">
+    <div class="feed-header">
+        <div class="action-buttons">
+            <a href="{% url 'reviews:ticket_create' %}" class="action-btn">Demander une critique</a>
+            <a href="{% url 'reviews:create_ticket_review' %}" class="action-btn">Créer une critique</a>
+        </div>
+    </div>
+
+    {% for post in posts %}
+        <div class="feed-card">
             {% if post.content_type == 'TICKET' %}
-                {% include 'reviews/ticket_snippet.html' with ticket=post %}
+                <div class="ticket-container">
+                    {% include 'reviews/ticket_snippet.html' with ticket=post %}
+
+                    {% if not post.has_review %}
+                        <div style="text-align: right; padding: 0 1.5rem 1.5rem;">
+                            <a href="{% url 'reviews:review_create' post.id %}" class="create-review-btn">Créer une critique</a>
+                        </div>
+                    {% endif %}
+                </div>
             {% elif post.content_type == 'REVIEW' %}
                 {% include 'reviews/review_snippet.html' with review=post %}
             {% endif %}
         </div>
-    </div>
-{% empty %}
-    <div class="alert alert-info">No posts in your feed yet.</div>
-{% endfor %}
+    {% empty %}
+        <div class="empty-feed">No posts in your feed yet.</div>
+    {% endfor %}
+</div>
 {% endblock %}
