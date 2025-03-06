@@ -13,7 +13,7 @@ def subscription_page(request):
             user_to_follow = User.objects.get(username=username)
             if user_to_follow == request.user:
                 messages.error(request, "Vous ne pouvez pas vous suivre vous-même.")
-            # Check if the user is already following the user_to_follow, if so message error "Vous suivez déjà cet utilisateur"
+            # Check if the user is already following the user_to_follow
             elif UserFollows.objects.filter(user=request.user, followed_user=user_to_follow).exists():
                 messages.error(request, f"Vous suivez déjà {username}")
             else:
