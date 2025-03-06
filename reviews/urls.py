@@ -5,6 +5,7 @@ app_name = 'reviews'
 
 urlpatterns = [
     path('feed/', views.feed, name='feed'),
+    path('posts/', views.posts, name='posts'),
 
     # Ticket URLs
     path('ticket/create/', views.ticket_create, name='ticket_create'),
