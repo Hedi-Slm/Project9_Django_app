@@ -41,6 +41,22 @@
     border-radius: 5px;
 }
 
+/* Image preview */
+.image-preview {
+    max-width: 200px;
+    height: auto;
+    border: 2px solid black;
+    margin-bottom: 1rem;
+    display: none; /* Hidden by default */
+}
+
+.existing-image-preview {
+    max-width: 200px;
+    height: auto;
+    border: 2px solid black;
+    margin-bottom: 1rem;
+}
+
 /* Submit button */
 .submit-btn {
     padding: 10px 20px;
