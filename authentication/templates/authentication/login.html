@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{% static 'authentication/login.css' %}">
 {% endblock extra_css %}
 
-{% block title %}LITReview - Connexion{% endblock %}
+{% block title %}LITReview - Connexion{% endblock title %}
 
 {% block content %}
 <div class="form-container">
@@ -29,7 +29,7 @@
                 {% endfor %}
                 {% if form.non_field_errors %}
                     {% for error in form.non_field_errors %}
-                        <p class="error">{{ error }}</p>
+                        <p class="error" role="alert">{{ error }}</p>
                     {% endfor %}
                 {% endif %}
                 <button type="submit" class="button">Se connecter</button>

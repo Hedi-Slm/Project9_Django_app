@@ -1,6 +1,6 @@
 {% extends 'base_plus_navbar.html' %}
 
-{% block title %}Delete Review - LITReview{% endblock %}
+{% block title %}Delete Review - LITReview{% endblock title %}
 
 {% block content %}
 <div class="row justify-content-center">
@@ -13,11 +13,11 @@
                 <p>Are you sure you want to delete your review of "{{ review.ticket.title }}"?</p>
                 <form method="post">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    <a href="{% url 'reviews:feed' %}" class="btn btn-outline-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                    <a href="{% url 'reviews:feed' %}" class="btn btn-outline-secondary">Annuler</a>
                 </form>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock content %}

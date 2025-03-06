@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="subscription-container">
-    <h2>Suivre d'autres utilisateurs</h2>
+    <h1>Suivre d'autres utilisateurs</h1>
 
     <form method="POST" action="{% url 'social:subscription_page' %}" class="follow-form">
         {% csrf_token %}

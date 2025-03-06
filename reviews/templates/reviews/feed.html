@@ -1,7 +1,7 @@
 {% extends 'base_plus_navbar.html' %}
 {% load static %}
 
-{% block title %}Feed - LITReview{% endblock %}
+{% block title %}Feed - LITReview{% endblock title %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'reviews/feed.css' %}">
@@ -36,4 +36,4 @@
         <div class="empty-feed">No posts in your feed yet.</div>
     {% endfor %}
 </div>
-{% endblock %}
+{% endblock content %}

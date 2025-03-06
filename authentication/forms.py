@@ -14,7 +14,8 @@ class RegisterForm(UserCreationForm):
         widget=forms.PasswordInput(attrs={'class': 'form-field', 'placeholder': "Mot de passe"})
     )
     password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-field', 'placeholder': "Confirmer mot de passe"})
+        widget=forms.PasswordInput(attrs={'class': 'form-field',
+                                          'placeholder': "Confirmer mot de passe"})
     )
 
     class Meta:
