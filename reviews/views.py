@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.db.models import CharField, Value
 from django.db import transaction
 from itertools import chain
@@ -13,7 +12,8 @@ from .forms import TicketForm, ReviewForm, CombinedTicketReviewForm
 def feed(request):
     # Get reviews from:  followed users / current user / reviews done on current user tickets
     reviews = (Review.objects.filter(user__in=request.user.following.values('followed_user'))
-               | Review.objects.filter(user=request.user) | Review.objects.filter(ticket__user=request.user))
+               | Review.objects.filter(user=request.user)
+               | Review.objects.filter(ticket__user=request.user))
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
 
     # Get tickets from: followed users / current user
@@ -32,6 +32,21 @@ def feed(request):
 
     return render(request, 'reviews/feed.html', {'posts': posts})
 
+
+@login_required
+def posts(request):
+    # Get the current user's reviews and tickets
+    reviews = Review.objects.filter(user=request.user).annotate(
+        content_type=Value('REVIEW', CharField()))
+    tickets = Ticket.objects.filter(user=request.user).annotate(
+        content_type=Value('TICKET', CharField()))
+
+    # Combine and sort by time created (newest first)
+    self_posts = sorted(chain(reviews, tickets), key=lambda post: post.time_created, reverse=True)
+
+    return render(request, 'reviews/posts.html', {'posts': self_posts})
+
+
 # Ticket Views
 @login_required
 def ticket_create(request):
@@ -41,7 +56,6 @@ def ticket_create(request):
             ticket = form.save(commit=False)
             ticket.user = request.user
             ticket.save()
-            messages.success(request, 'Your ticket has been created!')
             return redirect('reviews:feed')
     else:
         form = TicketForm()
@@ -55,7 +69,6 @@ def ticket_update(request, ticket_id):
         form = TicketForm(request.POST, request.FILES, instance=ticket)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your ticket has been updated!')
             return redirect('reviews:feed')
     else:
         form = TicketForm(instance=ticket)
@@ -67,7 +80,6 @@ def ticket_delete(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id, user=request.user)
     if request.method == 'POST':
         ticket.delete()
-        messages.success(request, 'Your ticket has been deleted!')
         return redirect('reviews:feed')
     return render(request, 'reviews/ticket_delete.html', {'ticket': ticket})
 
@@ -78,7 +90,6 @@ def review_create(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     # Check if user already reviewed this ticket
     if Review.objects.filter(ticket=ticket, user=request.user).exists():
-        messages.error(request, 'You have already reviewed this ticket!')
         return redirect('reviews:feed')
 
     if request.method == 'POST':
@@ -88,7 +99,6 @@ def review_create(request, ticket_id):
             review.user = request.user
             review.ticket = ticket
             review.save()
-            messages.success(request, 'Your review has been created!')
             return redirect('reviews:feed')
     else:
         form = ReviewForm()
@@ -105,7 +115,6 @@ def review_update(request, review_id):
         form = ReviewForm(request.POST, instance=review)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your review has been updated!')
             return redirect('reviews:feed')
     else:
         form = ReviewForm(instance=review)
@@ -120,7 +129,6 @@ def review_delete(request, review_id):
     review = get_object_or_404(Review, id=review_id, user=request.user)
     if request.method == 'POST':
         review.delete()
-        messages.success(request, 'Your review has been deleted!')
         return redirect('reviews:feed')
     return render(request, 'reviews/review_delete.html', {'review': review})
 
@@ -148,8 +156,6 @@ def create_ticket_review(request):
                     body=form.cleaned_data['body'],
                     user=request.user
                 )
-
-            messages.success(request, 'Your ticket and review have been created!')
             return redirect('reviews:feed')
     else:
         form = CombinedTicketReviewForm()
