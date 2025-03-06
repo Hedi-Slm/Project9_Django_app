@@ -86,3 +86,12 @@
     text-decoration: none;
     color: black;
 }
+
+/* Image preview */
+.image-preview {
+    max-width: 200px;
+    height: auto;
+    border: 2px solid black;
+    margin-bottom: 1rem;
+    display: none; /* Hidden by default */
+}
