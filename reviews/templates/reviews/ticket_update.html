@@ -1,32 +1,74 @@
 {% extends 'base_plus_navbar.html' %}
+{% load static %}
 
-{% block title %}Update Ticket - LITReview{% endblock %}
+{% block title %}Update Ticket - LITReview{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reviews/ticket_create.css' %}">
+{% endblock extra_css %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="mb-0">Update Ticket</h2>
-            </div>
-            <div class="card-body">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {% for field in form %}
-                        <div class="mb-3">
-                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                            {{ field.errors }}
-                            {{ field }}
-                            {% if field.help_text %}
-                                <small class="form-text text-muted">{{ field.help_text }}</small>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                    <button type="submit" class="btn btn-primary">Update Ticket</button>
-                    <a href="{% url 'reviews:feed' %}" class="btn btn-outline-secondary">Cancel</a>
-                </form>
-            </div>
+<div class="container-form">
+    <h1 class="page-title">Modifier le ticket</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="id_title" class="form-label">Titre</label>
+            <input type="text" name="title" id="id_title" class="form-control"
+                   value="{{ form.instance.title }}" required>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label for="id_description" class="form-label">Description</label>
+            <textarea name="description" id="id_description" class="form-control"
+                      rows="8">{{ form.instance.description }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Image</label>
+            <!-- Existing Image Preview -->
+            {% if form.instance.image %}
+                <img id="existing-image" class="existing-image-preview"
+                     src="{{ form.instance.image.url }}"
+                     alt="Current image">
+            {% endif %}
+            <!-- New Image Preview -->
+            <div id="image-preview-container">
+                <img id="image-preview" class="image-preview" alt="New image preview" style="display: none;">
+            </div>
+            <!-- Upload Button -->
+            <button type="button" class="file-upload-btn"
+                    onclick="document.getElementById('id_image').click()">
+                Changer l'image
+            </button>
+            <input type="file" name="image" id="id_image" style="display: none;">
+        </div>
+
+        <button type="submit" class="submit-btn">Mettre à jour</button>
+    </form>
 </div>
-{% endblock %}
+
+<script>
+    // Basic image replacement functionality
+    document.getElementById('id_image').addEventListener('change', function(e) {
+        // Only execute if a file was actually selected
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            const preview = document.getElementById('image-preview');
+            const existing = document.getElementById('existing-image');
+
+            reader.onload = function() {
+                // Hide existing image (if any) and show new preview
+                if (existing) existing.style.display = 'none';
+                preview.style.display = 'block';
+                preview.src = reader.result;
+            }
+
+            // Read the selected file
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+</script>
+{% endblock content %}
