@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
-from django.contrib.auth.forms import AuthenticationForm
 from .forms import RegisterForm, CustomAuthenticationForm
 
 User = get_user_model()  # Ensure we use the custom User model
@@ -19,6 +18,8 @@ def register_view(request):
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('reviews:feed')  # Redirect to feed page if user is already logged in
     if request.method == 'POST':
         form = CustomAuthenticationForm(request, data=request.POST)
         if form.is_valid():
