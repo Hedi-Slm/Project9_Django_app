@@ -1,0 +1,42 @@
+{% extends 'base_plus_navbar.html' %}
+{% load static %}
+
+{% block title %}My Posts - LITReview{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reviews/feed.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<div class="feed-container">
+    <div class="feed-header">
+        <h1>My Posts</h1>
+    </div>
+
+    {% for post in posts %}
+        <div class="feed-card">
+            {% if post.content_type == 'TICKET' %}
+                <div class="ticket-container">
+                    {% include 'reviews/ticket_snippet.html' with ticket=post %}
+
+                    <div style="text-align: right; padding: 0 1.5rem 1.5rem;">
+                        <a href="{% url 'reviews:ticket_update' post.id %}" class="action-btn">Modifier</a>
+                        <a href="{% url 'reviews:ticket_delete' post.id %}" class="action-btn">Supprimer</a>
+                    </div>
+                </div>
+            {% elif post.content_type == 'REVIEW' %}
+                <div class="review-container">
+                    {% include 'reviews/review_snippet.html' with review=post %}
+
+                    <div style="text-align: right; padding: 0 1.5rem 1.5rem;">
+                        <a href="{% url 'reviews:review_update' post.id %}" class="action-btn">Modifier</a>
+                        <a href="{% url 'reviews:review_delete' post.id %}" class="action-btn">Supprimer</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% empty %}
+        <div class="empty-feed">You haven't created any posts yet.</div>
+    {% endfor %}
+</div>
+{% endblock content %}
