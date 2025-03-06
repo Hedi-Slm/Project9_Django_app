@@ -30,6 +30,10 @@
 
             <div class="form-group">
                 <label for="id_image">Image</label>
+                <!-- Image Preview -->
+                <div id="image-preview-container">
+                    <img id="image-preview" class="image-preview" alt="Image preview">
+                </div>
                 <button type="button" class="file-upload-btn" onclick="document.getElementById('id_image').click()">
                     Télécharger fichier
                 </button>
@@ -51,8 +55,8 @@
                 <div class="rating-grid">
                     {% for i in "012345"|make_list %}
                     <div class="rating-option">
-                        <label>
-                            <input type="radio" name="rating" value="{{ i }}" required>
+                        <label for="id_rating_{{ forloop.counter }}">
+                            <input type="radio" name="rating" id="id_rating_{{ forloop.counter }}" value="{{ i }}" required>
                             <span class="radio-number">{{ i }}</span>
                         </label>
                     </div>
@@ -72,4 +76,16 @@
         </div>
     </form>
 </div>
+<script>
+    // Image preview functionality
+    document.getElementById('id_image').addEventListener('change', function(e) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const preview = document.getElementById('image-preview');
+            preview.style.display = 'block';
+            preview.src = reader.result;
+        }
+        reader.readAsDataURL(e.target.files[0]);
+    });
+</script>
 {% endblock content%}
